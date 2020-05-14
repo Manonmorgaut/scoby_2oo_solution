@@ -1,0 +1,141 @@
+/* $primary: #5663ff;
+$lightGray: #eff1f6; */
+
+.form-section {
+  max-width: 550px;
+  margin: 3vh auto 0;
+  padding: 0 20px;
+  max-height: 75vh;
+}
+
+.form-section .header {
+  text-align: center;
+}
+
+.form {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: rgba(16, 35, 82, 0.02) 0 7px 50px 20px;
+}
+
+.form-group .input {
+  margin: 8px 0 12px;
+  width: 100%;
+  border-radius: 4px;
+  display: block;
+  border: none;
+  font-size: 14px;
+  background: #eff1f6;
+  padding: 12px 12px;
+}
+
+.form-group .text-area {
+  display: block;
+  font-size: 14px;
+  width: 100%;
+  background: #eff1f6;
+  border: none;
+  border-radius: 4px;
+  line-height: 1.3;
+  resize: none;
+  box-sizing: border-box;
+  padding: 12px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-family: "Manrope", sans-serif;
+}
+
+.form-group .label {
+  font-weight: 600;
+}
+
+.form-group .input[type="file"] {
+  display: none;
+}
+
+.form-group .custom-upload {
+  border: 1px solid #5663ff;
+  color: #5663ff;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 10px 22px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.form button {
+  margin-top: 30px;
+  background: #5663ff;
+  width: 100%;
+  color: white;
+  padding: 16px 0;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+}
+
+.form-section.link {
+  text-align: center;
+}
+
+/* .form__select {
+      display: block;
+      font-size: 14px;
+      line-height: 1.3;
+      padding: 12px 12px;
+      width: 101%;
+      box-sizing: border-box;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 0;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      appearance: none;
+      background: $lightGray;
+      background-image: url("../media/arrow.svg");
+      background-repeat: no-repeat, repeat;
+      background-position: right 18px top 50%, 0 0;
+      background-size: 0.65em auto, 100%;
+    } */
+
+/* .form__text-area {
+      display: block;
+      font-size: 14px;
+      width: 100%;
+      background: $lightGray;
+      border: none;
+      border-radius: 4px;
+      line-height: 1.3;
+      resize: none;
+      box-sizing: border-box;
+      padding: 12px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-family: "Manrope", sans-serif;
+    } */
+
+/* 
+    button {
+   
+    }
+
+    .closeCross {
+      text-align: right;
+      font-weight: 900;
+      font-size: 1.4rem;
+      cursor: pointer;
+      float: right;
+      text-decoration: none;
+      color: black;
+    }
+  }
+
+  .form-section__link {
+    text-align: center;
+  }
+}
+
+.edit__phoneNumber {
+  margin-top: 20px;
+} */
