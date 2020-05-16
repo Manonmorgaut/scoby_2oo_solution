@@ -14,7 +14,6 @@ $lightGray: #eff1f6; */
   width: 250px;
   border-radius: 100%;
   overflow: hidden;
-
   margin: 0 auto 20px;
 }
 
@@ -32,6 +31,10 @@ $lightGray: #eff1f6; */
   padding: 30px;
   border-radius: 20px;
   box-shadow: rgba(16, 35, 82, 0.02) 0 7px 50px 20px;
+}
+
+.form .title {
+  margin: 10px 0;
 }
 
 .form-group .input {

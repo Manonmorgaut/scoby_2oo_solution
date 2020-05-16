@@ -1,16 +1,19 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
+
 import UserContext from "../components/Auth/UserContext";
 import apiHandler from "../api/apiHandler";
 import "../styles/Profile.css";
 import "../styles/form.css";
+import FeedBack from "../components/FeedBack";
 
 class Profile extends Component {
   static contextType = UserContext;
 
   state = {
     phoneNumber: "",
+    httpResponse: null,
   };
 
   submitPhoneNumber = (event) => {
@@ -19,9 +22,23 @@ class Profile extends Component {
       .updateUser(this.state)
       .then((data) => {
         this.context.setUser(data);
+        this.setState({
+          httpResponse: { status: "success", message: "Phone number added." },
+        });
+        this.timeoutId = setTimeout(() => {
+          this.setState({ httpResponse: null });
+        }, 1000);
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({
+          httpResponse: {
+            status: "failure",
+            message: "An error occured, try again later",
+          },
+        });
+        this.timeoutId = setTimeout(() => {
+          this.setState({ httpResponse: null });
+        }, 1000);
       });
   };
 
@@ -31,6 +48,7 @@ class Profile extends Component {
 
   render() {
     const { user } = this.context;
+    const { httpResponse } = this.state;
     if (!user) return null;
 
     return (
@@ -39,7 +57,7 @@ class Profile extends Component {
           <img src={user.profileImg} alt={user.firstName} />
         </div>
         <div className="user-presentation">
-          <h2>
+          <h2 className="title">
             {user.firstName} {user.lastName}
           </h2>
           <Link className="link" to="/profile/settings">
@@ -49,7 +67,12 @@ class Profile extends Component {
 
         <div className="user-contact">
           <h4>Add a phone number</h4>
-
+          {httpResponse && (
+            <FeedBack
+              message={httpResponse.message}
+              status={httpResponse.status}
+            />
+          )}
           <form
             className="form"
             onChange={this.handlePhoneNumber}

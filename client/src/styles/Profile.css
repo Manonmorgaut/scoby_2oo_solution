@@ -18,6 +18,10 @@
   border-radius: 10px;
 }
 
+.Profile .title {
+  margin: 10px 0;
+}
+
 .Profile .stack.empty {
   margin-top: 60px;
   display: flex;
