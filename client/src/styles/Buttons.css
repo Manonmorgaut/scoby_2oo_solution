@@ -18,6 +18,10 @@
   color: white;
 }
 
+.Btn.btn-primary:disabled {
+  background: rgb(190, 190, 190);
+}
+
 .Btn.btn-secondary {
   background: white;
   color: #5663ff;

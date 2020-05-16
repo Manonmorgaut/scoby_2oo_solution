@@ -5,7 +5,9 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
-
+const session = require("express-session");
+const mongoose = require("mongoose");
+const MongoStore = require("connect-mongo")(session);
 const indexRouter = require("./routes/index");
 
 const app = express();
@@ -26,9 +28,25 @@ app.use(express.urlencoded({ extended: false })); // Alows us to access data sen
 app.use(cookieParser()); // Allows us to access cookies through request.cookies
 app.use(express.static(path.join(__dirname, "public"))); // Define public folder to serve static assets, imgs, etc..
 
+app.use(
+  session({
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    saveUninitialized: true,
+    resave: true,
+    secret: process.env.SESSION_SECRET,
+  })
+);
 /*  Routers ! */
 
+app.use(function (req, res, next) {
+  console.log("current user in session", req.session.currentUser);
+  next();
+});
+
 app.use("/", indexRouter);
+
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/users", require("./routes/users"));
 app.use("/api/items", require("./routes/items"));
 
 /*  App is exported and then used in ./bin/www where the http server is initialized. */

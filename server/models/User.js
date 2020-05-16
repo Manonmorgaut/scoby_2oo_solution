@@ -12,10 +12,7 @@ const userSchema = new Schema({
   email: String,
   password: String,
   city: String,
-  id_contact: {
-    type: Schema.Types.ObjectId,
-    ref: "Contact",
-  },
+  phoneNumber: String,
   id_item: {
     type: Schema.Types.ObjectId,
     ref: "Item",

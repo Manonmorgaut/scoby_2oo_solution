@@ -1,19 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
-import mapboxgl from "mapbox-gl";
 import { BrowserRouter } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
-
-mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
+import UserProvider from "./components/Auth/UserProvider";
+import "./styles/reset.css";
+import "./index.css";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
+  <BrowserRouter>
+    <UserProvider>
       <App />
-    </BrowserRouter>
-  </React.StrictMode>,
+    </UserProvider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 

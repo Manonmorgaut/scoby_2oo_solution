@@ -28,7 +28,6 @@ const itemSchema = new Schema(
       },
       coordinates: {
         type: [Number],
-        index: "2dsphere",
       },
       formattedAddress: String,
     },

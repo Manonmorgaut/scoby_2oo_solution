@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Item = require("../models/Item");
+const uploader = require("../config/cloudinary");
+const requireAuth = require("../middlewares/requireAuth");
 
 /***************************
  * ALL THE ROUTES ARE
@@ -9,6 +11,7 @@ const Item = require("../models/Item");
 
 router.get("/", (req, res, next) => {
   Item.find({})
+    .populate("id_user")
     .then((itemDocuments) => {
       res.status(200).json(itemDocuments);
     })
@@ -17,7 +20,12 @@ router.get("/", (req, res, next) => {
     });
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", requireAuth, uploader.single("image"), (req, res, next) => {
+  if (req.file) {
+    req.body.image = req.file.secure_url;
+  }
+
+  req.body.id_user = req.currentUser._id;
   Item.create(req.body)
     .then((itemDocument) => {
       res.status(201).json(itemDocument);
