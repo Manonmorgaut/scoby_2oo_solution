@@ -5,6 +5,11 @@ import "../styles/NavMain.css";
 
 const NavMain = (props) => {
   const { context, toggleFormDisplay } = props;
+
+  const handleLogout = () => {
+    context.removeUser();
+  };
+
   return (
     <nav className="NavMain">
       <NavLink exact to="/">
@@ -22,7 +27,7 @@ const NavMain = (props) => {
               </NavLink>
             </li>
             <li>
-              <p onClick={context.logout}>Logout</p>
+              <p onClick={handleLogout}>Logout</p>
             </li>
           </React.Fragment>
         )}
