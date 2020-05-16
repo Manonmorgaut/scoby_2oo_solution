@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// const geocoder = require("../middlewares/geocoder");
-
 const itemSchema = new Schema(
   {
     name: String,
@@ -20,7 +18,6 @@ const itemSchema = new Schema(
     ],
     quantity: Number,
     contact: String,
-    address: String,
     location: {
       type: {
         type: String,
@@ -38,17 +35,6 @@ const itemSchema = new Schema(
   },
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
-
-// geocode middleware
-// itemSchema.pre("save", async function (next) {
-//   const loc = await geocoder.geocode(this.address);
-//   this.location = {
-//     type: "Point",
-//     coordinates: [loc[0].longitude, loc[0].latitude],
-//     formattedAddress: loc[0].formattedAddress,
-//   };
-//   next();
-// });
 
 const Item = mongoose.model("Item", itemSchema);
 

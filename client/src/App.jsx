@@ -7,11 +7,9 @@ import About from "./views/About";
 import Signup from "./views/Signup";
 import Signin from "./views/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
-import UserContext from "./components/Auth/UserContext";
 import FormProfile from "./components/Forms/FormProfile";
 
 class App extends React.Component {
-  static contextType = UserContext;
   state = {
     displayForm: false,
   };

@@ -17,12 +17,6 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Item",
   },
-  //   favorites: [
-  //     {
-  //       type: Schema.Types.ObjectId,
-  //       ref: 'Item',
-  //     },
-  //   ], if we have time
 });
 
 const User = mongoose.model("User", userSchema);

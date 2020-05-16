@@ -13,8 +13,9 @@ router.post("/signin", (req, res, next) => {
     if (!isValidPassword) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    const userObj = userDocument.toObject();
-    delete userObj.password;
+    const userObj = userDocument.toObject();  // Mongoose documents are immutable, we have to transform it into an object
+                                              // in order to remove / add fields to it.
+    delete userObj.password;  // Remove password from object before sending to the front end.                  
     req.session.currentUser = userObj;
     res.status(200).json(userObj);
   });
@@ -33,8 +34,9 @@ router.post("/signup", (req, res, next) => {
     const newUser = { email, lastName, firstName, password: hashedPassword };
 
     User.create(newUser).then((newUserDocument) => {
-      const userObj = newUserDocument.toObject();
-      delete userObj.password;
+      const userObj = newUserDocument.toObject(); // Mongoose documents are immutable, we have to transform it into an object
+                                                  // in order to remove / add fields to it.
+      delete userObj.password; // Remove password from object before sending to the front end.
       req.session.currentUser = userObj;
       res.status(201).json(userObj);
     });

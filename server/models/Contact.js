@@ -6,7 +6,7 @@ const contactSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  email: String, //optional: if user provides another contact email
+  email: String,
   phoneNumber: String,
 });
 

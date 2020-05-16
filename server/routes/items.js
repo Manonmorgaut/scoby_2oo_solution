@@ -30,11 +30,7 @@ router.post("/", requireAuth, uploader.single("image"), (req, res, next) => {
     });
 });
 
-router.patch(
-  "/:id",
-  requireAuth,
-  uploader.single("image"),
-  (req, res, next) => {
+router.patch( "/:id", requireAuth,uploader.single("image"), (req, res, next) => {
     const item = { ...req.body };
 
     if (req.file) {
@@ -51,7 +47,7 @@ router.patch(
   }
 );
 
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", requireAuth, (req, res, next) => {
   Item.findByIdAndRemove(req.params.id)
     .then((itemDocument) => {
       if (itemDocument === null) {
