@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
-
 import UserContext from "../components/Auth/UserContext";
 import apiHandler from "../api/apiHandler";
-import "../styles/Profile.css";
-import "../styles/form.css";
 import FeedBack from "../components/FeedBack";
 import CardItem from "../components/Items/CardItem";
 import ItemEditFrom from "../components/Items/ItemEditForm";
+import "../styles/Profile.css";
+import "../styles/form.css";
+
 class Profile extends Component {
   static contextType = UserContext;
 
