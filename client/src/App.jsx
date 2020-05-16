@@ -47,34 +47,32 @@ class App extends React.Component {
       <div className="App">
         <NavMain toggleFormDisplay={this.toggleFormDisplay} />
 
-        <main className="page">
-          {this.state.displayForm && (
-            <ItemForm handleClose={this.handleClose} addItem={this.addItem} />
-          )}
+        {this.state.displayForm && (
+          <ItemForm handleClose={this.handleClose} addItem={this.addItem} />
+        )}
 
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={(props) => (
-                <Home
-                  {...props}
-                  items={this.state.items}
-                  onSelectItem={this.onSelectItem}
-                />
-              )}
-            />
-            <ProtectedRoute exact path="/profile" component={Profile} />
-            <ProtectedRoute
-              exact
-              path="/profile/settings"
-              component={FormProfile}
-            />
-            <Route exact path="/about" component={About} />
-            <Route exact path="/signup" component={Signup} />
-            <Route exact path="/signin" component={Signin} />
-          </Switch>
-        </main>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={(props) => (
+              <Home
+                {...props}
+                items={this.state.items}
+                onSelectItem={this.onSelectItem}
+              />
+            )}
+          />
+          <ProtectedRoute exact path="/profile" component={Profile} />
+          <ProtectedRoute
+            exact
+            path="/profile/settings"
+            component={FormProfile}
+          />
+          <Route exact path="/about" component={About} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/signin" component={Signin} />
+        </Switch>
       </div>
     );
   }
