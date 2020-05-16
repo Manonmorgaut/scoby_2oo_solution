@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/ItemDisplay.css";
+import "../../styles/ItemDisplay.css";
 
 const ItemDisplay = ({ item, handleClose }) => {
   return (

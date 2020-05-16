@@ -1,6 +1,6 @@
 import React from "react";
 import AppMap from "../components/AppMap";
-import ItemDisplay from "../components/ItemDisplay";
+import ItemDisplay from "../components/Items/ItemDisplay";
 
 class Home extends React.Component {
   state = {

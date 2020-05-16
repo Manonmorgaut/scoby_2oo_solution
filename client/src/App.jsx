@@ -10,7 +10,6 @@ import Signup from "./views/Signup";
 import Signin from "./views/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import UserContext from "./components/Auth/UserContext";
-import "./App.css";
 import FormProfile from "./components/Forms/FormProfile";
 
 class App extends React.Component {

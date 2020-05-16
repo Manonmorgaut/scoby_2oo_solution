@@ -18,8 +18,6 @@ class AppMap extends React.PureComponent {
     zoom: 12,
   };
 
-  componentDidUpdate(prevProps, prevState) {}
-
   componentDidMount() {
     const success = (position) => {
       const latitude = position.coords.latitude;
