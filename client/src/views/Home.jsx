@@ -42,7 +42,10 @@ class Home extends React.Component {
           />
         )}
         {this.state.selectedItem !== null && (
-          <ItemDisplay item={this.state.selectedItem} handleClose={this.handleClose} />
+          <ItemDisplay
+            item={this.state.selectedItem}
+            handleClose={this.handleClose}
+          />
         )}
         <AppMap items={this.state.items} handleSelectItem={this.onSelectItem} />
       </React.Fragment>
