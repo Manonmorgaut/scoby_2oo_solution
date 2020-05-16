@@ -5,8 +5,12 @@ import UserContext from "./Auth/UserContext";
 function ProtectedRoute({ component: Component, ...rest }) {
   return (
     <UserContext.Consumer>
-      {(userContext) => {
-        if (userContext.isLoggedIn) {
+      {(context) => {
+        console.log(context);
+        if (context.isLoading) {
+          return <div>Loading ...</div>;
+        }
+        if (context.isLoggedIn) {
           return (
             <Route {...rest} render={(props) => <Component {...props} />} />
           );

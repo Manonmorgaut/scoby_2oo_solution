@@ -35,6 +35,7 @@ class UserProvider extends React.Component {
     const contextValue = {
       user: this.state.user,
       isLoggedIn: this.state.isLoggedIn,
+      isLoading: this.state.isLoading,
       removeUser: this.removeUser,
       setUser: this.setUser,
     };
