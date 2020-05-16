@@ -2,18 +2,27 @@ import React from "react";
 import "../styles/UploadWidget.css";
 
 class UploadWidget extends React.Component {
-  inputRef = React.createRef();
+  constructor(props) {
+    super(props);
+    this.handleFile = this.handleFile.bind(this);
+  }
 
-  focusInput = () => {
-    this.inputRef.current.click();
-  };
-
-  handleFile = (event) => {
+  handleFile(event) {
     event.stopPropagation();
     const tmpUrl = URL.createObjectURL(event.target.files[0]);
     const file = event.target.files[0];
     this.props.onFileSelect({ tmpUrl, file });
-  };
+  }
+
+  componentDidMount() {
+    console.log("I am here");
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps === this.props) {
+      return;
+    }
+  }
 
   render() {
     const { name } = this.props;
@@ -28,8 +37,7 @@ class UploadWidget extends React.Component {
         </label>
         <input
           onChange={this.handleFile}
-          ref={this.inputRef}
-          className="input"
+          className="UploadWidget input"
           id={name}
           type="file"
           name={name}

@@ -8,6 +8,6 @@
   margin-bottom: 20px;
 }
 
-.input[type="file"] {
+.UploadWidget.input[type="file"] {
   display: none;
 }

@@ -83,7 +83,10 @@ class FormProfile extends Component {
             />
           </div>
           <div className="form-group">
-            <UploadWidget onFileSelect={this.handleFileSelect}>
+            <UploadWidget
+              onFileSelect={this.handleFileSelect}
+              name="profileImg"
+            >
               Change profile image
             </UploadWidget>
           </div>

@@ -38,8 +38,8 @@ class AppMap extends React.PureComponent {
     }
   }
 
-  handleClick = (selectedItem) => {
-    this.setState({ selectedItem });
+  handleClick = (selectedItemIndex) => {
+    this.props.handleSelectItem(selectedItemIndex);
   };
 
   render() {
@@ -61,7 +61,7 @@ class AppMap extends React.PureComponent {
         {kombuchas.map((item, index) => (
           <Feature
             key={index}
-            onClick={(event) => this.handleClick(item)}
+            onClick={(event) => this.handleClick(index)}
             coordinates={item.location.coordinates}
           />
         ))}

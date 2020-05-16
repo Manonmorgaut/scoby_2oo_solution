@@ -28,7 +28,7 @@ class UserProvider extends React.Component {
   };
 
   setUser = (userInfo) => {
-    this.setState({ user: userInfo });
+    this.setState({ user: userInfo, isLoggedIn: true });
   };
 
   render() {
