@@ -1,5 +1,5 @@
 .ItemForm-container {
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -64,7 +64,7 @@
   background-size: 0.65em auto, 100%;
 }
 
- .message {
+.message {
   display: flex;
   flex-direction: row;
   background-color: #f1f2ff;

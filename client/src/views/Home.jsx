@@ -1,5 +1,4 @@
 import React from "react";
-import Footer from "../components/Footer";
 import AppMap from "../components/AppMap";
 import ItemDisplay from "../components/ItemDisplay";
 
@@ -26,7 +25,6 @@ class Home extends React.Component {
           />
         )}
         <AppMap items={this.props.items} handleSelectItem={this.onSelectItem} />
-        <Footer />
       </React.Fragment>
     );
   }
