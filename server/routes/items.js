@@ -25,7 +25,7 @@ router.post("/", requireAuth, uploader.single("image"), (req, res, next) => {
     req.body.image = req.file.secure_url;
   }
 
-  req.body.id_user = req.currentUser._id;
+  req.body.id_user = req.session.currentUser._id;
   Item.create(req.body)
     .then((itemDocument) => {
       res.status(201).json(itemDocument);
