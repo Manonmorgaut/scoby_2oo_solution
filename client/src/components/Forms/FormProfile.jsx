@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import UserContext from "../Auth/UserContext";
 import Button from "../Button";
+import UploadWidget from "../UploadWidget";
+import FeedBack from "../FeedBack";
 import apiHandler from "../../api/apiHandler";
 import "../../styles/form.css";
-import UploadWidget from "../UploadWidget";
 
 class FormProfile extends Component {
   static contextType = UserContext;
 
   state = {
     tmpUrl: "",
+    httpResponse: null,
   };
 
   handleChange = (event) => {
@@ -32,7 +34,7 @@ class FormProfile extends Component {
 
   checkError = () => {
     for (const key in this.state) {
-      if (key === "tmpUrl") continue;
+      if (key === "tmpUrl" || key === "httpResponse") continue;
       if (this.state[key] === "") {
         return true;
       }
@@ -45,17 +47,36 @@ class FormProfile extends Component {
     const fd = new FormData();
 
     for (const key in this.state) {
-      if (key === "tmpUrl") continue;
+      if (key === "tmpUrl" || key === "httpResponse") continue;
       fd.append(key, this.state[key]);
     }
-    console.log(this.state);
+
     apiHandler
       .updateUser(fd)
       .then((data) => {
         this.context.setUser(data);
+        this.setState({
+          httpResponse: {
+            status: "success",
+            message: "Profile successfully updated.",
+          },
+        });
+        this.timeoutId = setTimeout(() => {
+          this.setState({ httpResponse: null });
+        }, 2000);
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({
+          httpResponse: {
+            status: "failure",
+            message:
+              "Something bad happened while updating your profile, try again later",
+          },
+        });
+
+        this.timeoutId = setTimeout(() => {
+          this.setState({ httpResponse: null });
+        }, 2000);
       });
   };
 
@@ -65,6 +86,7 @@ class FormProfile extends Component {
 
   render() {
     const { user } = this.context;
+    const { httpResponse } = this.state;
     if (!user) return <div>Loading...</div>;
     return (
       <section className="form-section">
@@ -90,6 +112,13 @@ class FormProfile extends Component {
               Change profile image
             </UploadWidget>
           </div>
+
+          {httpResponse && (
+            <FeedBack
+              message={httpResponse.message}
+              status={httpResponse.status}
+            />
+          )}
 
           <div className="form-group">
             <label className="label" htmlFor="firstName">

@@ -6,7 +6,6 @@ function ProtectedRoute({ component: Component, ...rest }) {
   return (
     <UserContext.Consumer>
       {(context) => {
-        console.log(context);
         if (context.isLoading) {
           return <div>Loading ...</div>;
         }
