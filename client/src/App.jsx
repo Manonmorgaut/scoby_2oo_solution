@@ -4,8 +4,6 @@ import NavMain from "./components/NavMain";
 import Home from "./views/Home";
 import Profile from "./views/Profile";
 import About from "./views/About";
-import ItemForm from "./components/Items/ItemForm";
-import apiHandler from "./api/apiHandler";
 import Signup from "./views/Signup";
 import Signin from "./views/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -15,18 +13,7 @@ import FormProfile from "./components/Forms/FormProfile";
 class App extends React.Component {
   static contextType = UserContext;
   state = {
-    items: [],
     displayForm: false,
-  };
-
-  componentDidMount() {
-    apiHandler.getItems().then((data) => {
-      this.setState({ items: data });
-    });
-  }
-
-  addItem = (item) => {
-    this.setState({ items: [...this.state.items, item] });
   };
 
   toggleFormDisplay = (event) => {
@@ -38,14 +25,9 @@ class App extends React.Component {
   };
 
   render() {
-    const { user } = this.context;
     return (
       <div className="App">
         <NavMain toggleFormDisplay={this.toggleFormDisplay} />
-
-        {user && this.state.displayForm && (
-          <ItemForm handleClose={this.handleClose} addItem={this.addItem} />
-        )}
 
         <Switch>
           <Route
@@ -54,12 +36,24 @@ class App extends React.Component {
             render={(props) => (
               <Home
                 {...props}
+                displayForm={this.state.displayForm}
+                handleFormClose={this.handleClose}
                 items={this.state.items}
                 onSelectItem={this.onSelectItem}
               />
             )}
           />
-          <ProtectedRoute exact path="/profile" component={Profile} />
+          <ProtectedRoute
+            exact
+            path="/profile"
+            render={(props) => (
+              <Profile
+                {...props}
+                displayForm={this.state.displayForm}
+                handleFormClose={this.handleClose}
+              />
+            )}
+          />
           <ProtectedRoute
             exact
             path="/profile/settings"

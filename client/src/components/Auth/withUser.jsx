@@ -1,5 +1,5 @@
 import React from "react";
-import UserContext from "../Auth/UserContext";
+import UserContext from "./UserContext";
 
 const withUser = (ComponentToExposeContextTo) => (props) => {
   return (

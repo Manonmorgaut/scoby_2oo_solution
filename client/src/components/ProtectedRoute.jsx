@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import UserContext from "./Auth/UserContext";
 
-function ProtectedRoute({ component: Component, ...rest }) {
+function ProtectedRoute({ component: Component, render, ...rest }) {
   return (
     <UserContext.Consumer>
       {(context) => {
@@ -11,7 +11,12 @@ function ProtectedRoute({ component: Component, ...rest }) {
         }
         if (context.isLoggedIn) {
           return (
-            <Route {...rest} render={(props) => <Component {...props} />} />
+            <React.Fragment>
+              {render && <Route {...rest} render={render} />}
+              {!render && (
+                <Route {...rest} render={(props) => <Component {...props} />} />
+              )}
+            </React.Fragment>
           );
         } else {
           return <Redirect to="/signin" />;

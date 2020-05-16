@@ -6,12 +6,12 @@ import apiHandler from "../api/apiHandler";
 import FeedBack from "../components/FeedBack";
 import CardItem from "../components/Items/CardItem";
 import ItemEditFrom from "../components/Items/ItemEditForm";
+import ItemForm from "../components/Items/ItemForm";
 import "../styles/Profile.css";
 import "../styles/form.css";
 
 class Profile extends Component {
   static contextType = UserContext;
-
   state = {
     phoneNumber: "",
     httpResponse: null,
@@ -83,6 +83,10 @@ class Profile extends Component {
     this.setState({ userItems });
   };
 
+  addItem = (item) => {
+    this.setState({ userItems: [...this.state.userItems, item] });
+  };
+
   render() {
     const { user } = this.context;
     const { httpResponse, userItems, selectedItem } = this.state;
@@ -95,6 +99,12 @@ class Profile extends Component {
             item={selectedItem}
             handleClose={this.onEditFormClose}
             onItemUpdate={this.handleItemUpdate}
+          />
+        )}
+        {user && this.props.displayForm && (
+          <ItemForm
+            handleClose={this.props.handleFormClose}
+            addItem={this.addItem}
           />
         )}
         <div className="user-image round-image">

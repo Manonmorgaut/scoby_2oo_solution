@@ -2,8 +2,6 @@ import React from "react";
 import UserContext from "./UserContext";
 import apiHandler from "../../api/apiHandler";
 
-// export const AuthContext = React.createContext();
-
 class UserProvider extends React.Component {
   state = {
     user: null,
