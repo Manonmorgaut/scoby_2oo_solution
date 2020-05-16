@@ -65,14 +65,13 @@ class AutocompletePlace extends Component {
   }
 
   render() {
-    const { results, isLoading, search } = this.state;
-
+    const { results, isLoading } = this.state;
     return (
       <div className="AutocompletePlace">
         <input
           className="input"
           type="text"
-          value={search}
+          defaultValue={this.props.defaultValue || ""}
           onChange={this.handleSearchChange}
           placeholder="Type an address"
         />

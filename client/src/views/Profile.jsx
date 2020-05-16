@@ -7,19 +7,29 @@ import apiHandler from "../api/apiHandler";
 import "../styles/Profile.css";
 import "../styles/form.css";
 import FeedBack from "../components/FeedBack";
-
+import CardItem from "../components/Items/CardItem";
+import ItemEditFrom from "../components/Items/ItemEditForm";
 class Profile extends Component {
   static contextType = UserContext;
 
   state = {
     phoneNumber: "",
     httpResponse: null,
+    selectedItem: null,
+    userItems: [],
   };
+
+  componentDidMount() {
+    apiHandler.getUserItems().then((data) => {
+      this.setState({ userItems: data });
+    });
+  }
 
   submitPhoneNumber = (event) => {
     event.preventDefault();
+    const { httpResponse, userItems, selectedItem, ...userData } = this.state;
     apiHandler
-      .updateUser(this.state)
+      .updateUser(userData)
       .then((data) => {
         this.context.setUser(data);
         this.setState({
@@ -46,13 +56,47 @@ class Profile extends Component {
     this.setState({ phoneNumber: event.target.value });
   };
 
+  deleteItem = (itemId) => {
+    apiHandler.removeItem(itemId).then(() => {
+      const userItems = [...this.state.userItems].filter(
+        (item) => item._id !== itemId
+      );
+      this.setState({ userItems });
+    });
+  };
+
+  onItemSelect = (itemId) => {
+    const selectedItem = this.state.userItems.find(
+      (item) => item._id === itemId
+    );
+    this.setState({ selectedItem: selectedItem });
+  };
+
+  onEditFormClose = () => {
+    this.setState({ selectedItem: null });
+  };
+
+  handleItemUpdate = (updatedItem) => {
+    const userItems = [...this.state.userItems].map((item) =>
+      item._id === updatedItem._id ? updatedItem : item
+    );
+    this.setState({ userItems });
+  };
+
   render() {
     const { user } = this.context;
-    const { httpResponse } = this.state;
+    const { httpResponse, userItems, selectedItem } = this.state;
     if (!user) return null;
 
     return (
       <section className="Profile">
+        {selectedItem && (
+          <ItemEditFrom
+            item={selectedItem}
+            handleClose={this.onEditFormClose}
+            onItemUpdate={this.handleItemUpdate}
+          />
+        )}
         <div className="user-image round-image">
           <img src={user.profileImg} alt={user.firstName} />
         </div>
@@ -95,31 +139,28 @@ class Profile extends Component {
           </form>
         </div>
 
-        <div className="stack-empty">
-          <div className="">
-            <img src="/media/personal-page-empty-state.svg" alt="" />
-          </div>
-          <p>You don't have any items :(</p>
-        </div>
+        {!userItems.length && (
+          <React.Fragment>
+            <div className="">
+              <img src="/media/personal-page-empty-state.svg" alt="" />
+            </div>
+            <p>You don't have any items :(</p>
+          </React.Fragment>
+        )}
 
-        {/* <div className="stack">
-          <h3>Your items</h3>
-          <div className="stack__item">
-            <div className="round__image">
-              <img src="{{this.image}}" alt="{{this.name}}" />
-            </div>
-            <div className="stack__item__description">
-              <h2>this.name</h2>
-              <h4>Quantity: this.quantity </h4>
-              <p>this.description</p>
-              <div class="stack__item__buttons">
-                <a href="/personal/delete/{{this._id}}">
-                  <button>Delete</button>
-                </a>
-              </div>
-            </div>
+        {!!userItems.length && (
+          <div className="CardItems">
+            <h3>Your items</h3>
+            {userItems.map((item, index) => (
+              <CardItem
+                key={index}
+                {...item}
+                handleDelete={this.deleteItem}
+                handleEdit={this.onItemSelect}
+              />
+            ))}
           </div>
-        </div> */}
+        )}
       </section>
     );
   }

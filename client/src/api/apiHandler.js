@@ -51,6 +51,27 @@ export default {
       .catch(errorHandler);
   },
 
+  removeItem(itemId) {
+    return service
+      .delete(`/api/items/${itemId}`)
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
+
+  updateItem(itemId, data) {
+    return service
+      .patch(`/api/items/${itemId}`, data)
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
+
+  getUserItems() {
+    return service
+      .get("/api/users/items")
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
+
   addItem(data) {
     return service
       .post("/api/items", data)

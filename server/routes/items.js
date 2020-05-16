@@ -35,15 +35,26 @@ router.post("/", requireAuth, uploader.single("image"), (req, res, next) => {
     });
 });
 
-router.patch("/:id", (req, res, next) => {
-  Item.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  })
-    .then((itemDocument) => {})
-    .catch((error) => {
-      res.status(500).json(error);
-    });
-});
+router.patch(
+  "/:id",
+  requireAuth,
+  uploader.single("image"),
+  (req, res, next) => {
+    const item = { ...req.body };
+
+    if (req.file) {
+      item.image = req.file.secure_url;
+    }
+    
+    Item.findByIdAndUpdate(req.params.id, item, { new: true })
+      .then((itemDocument) => {
+        res.status(200).json(itemDocument);
+      })
+      .catch((error) => {
+        res.status(500).json(error);
+      });
+  }
+);
 
 router.delete("/:id", (req, res, next) => {
   Item.findByIdAndRemove(req.params.id)

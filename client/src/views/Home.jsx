@@ -1,5 +1,4 @@
 import React from "react";
-// import Map from "../components/Map";
 import Footer from "../components/Footer";
 import AppMap from "../components/AppMap";
 import ItemDisplay from "../components/ItemDisplay";
@@ -20,8 +19,6 @@ class Home extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {/* <Map items={props.items} /> */}
-
         {this.state.selectedItem !== null && (
           <ItemDisplay
             item={this.props.items[this.state.selectedItem]}

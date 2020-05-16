@@ -14,10 +14,6 @@ class UploadWidget extends React.Component {
     this.props.onFileSelect({ tmpUrl, file });
   }
 
-  componentDidMount() {
-    console.log("I am here");
-  }
-
   componentDidUpdate(prevProps, prevState) {
     if (prevProps === this.props) {
       return;

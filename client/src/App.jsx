@@ -9,25 +9,21 @@ import apiHandler from "./api/apiHandler";
 import Signup from "./views/Signup";
 import Signin from "./views/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
-
+import UserContext from "./components/Auth/UserContext";
 import "./App.css";
 import FormProfile from "./components/Forms/FormProfile";
 
 class App extends React.Component {
+  static contextType = UserContext;
   state = {
     items: [],
     displayForm: false,
   };
 
   componentDidMount() {
-    apiHandler
-      .getItems()
-      .then((data) => {
-        this.setState({ items: data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    apiHandler.getItems().then((data) => {
+      this.setState({ items: data });
+    });
   }
 
   addItem = (item) => {
@@ -43,11 +39,12 @@ class App extends React.Component {
   };
 
   render() {
+    const { user } = this.context;
     return (
       <div className="App">
         <NavMain toggleFormDisplay={this.toggleFormDisplay} />
 
-        {this.state.displayForm && (
+        {user && this.state.displayForm && (
           <ItemForm handleClose={this.handleClose} addItem={this.addItem} />
         )}
 

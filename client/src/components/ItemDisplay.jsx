@@ -23,7 +23,7 @@ const ItemDisplay = ({ item, handleClose }) => {
         <span>Given away by {item.id_user.firstName}</span>
       </div>
       <div className="contact-information">
-        Contact {item.id_user.firstName} at <b>marker.properties.contact</b>
+        Contact {item.id_user.firstName} at <b>{item.contact}</b>
       </div>
     </div>
   );
