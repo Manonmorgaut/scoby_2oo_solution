@@ -5,6 +5,12 @@ const Map = ReactMapboxGl({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
 });
 
+const kombuchaImg = new Image(20, 30);
+kombuchaImg.src = "/media/kombucha.svg";
+
+const kefirImg = new Image(30, 30);
+kefirImg.src = "/media/kefir.svg";
+
 class AppMap extends React.PureComponent {
   state = {
     lng: 2.349014,
@@ -14,45 +20,70 @@ class AppMap extends React.PureComponent {
 
   componentDidUpdate(prevProps, prevState) {}
 
+  componentDidMount() {
+    const success = (position) => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      this.setState({ lat: latitude, lng: longitude });
+    };
+
+    const error = () => {
+      console.log("An error occured geolocating user");
+    };
+
+    if (!navigator.geolocation) {
+      console.log("Geolocation not supported");
+    } else {
+      navigator.geolocation.getCurrentPosition(success, error);
+    }
+  }
+
   handleClick = (selectedItem) => {
-    // this.setState({ selectedItem });
-    console.log("I am here");
+    this.setState({ selectedItem });
   };
 
   render() {
-    // const markers = this.props.items.map((item, index) => (
-    //   <Marker
-    //     key={item._id}
-    //     onClick={() => this.props.handleSelectItem(index)}
-    //     coordinates={item.location.coordinates}
-    //     offset={[-2 * index, 10]}
-    //   >
-    //     <img
-    //       style={{ cursor: "pointer" }}
-    //       src="/media/kombucha.svg"
-    //       alt="kombucha"
-    //     />
-    //   </Marker>
-    // ));
+    const kombuchas = this.props.items.filter(
+      (item) => item.category[0] === "Kombucha"
+    );
 
-    const toto = new Image(20, 30);
-    toto.src = "/media/kombucha.svg";
+    const kefirs = this.props.items.filter(
+      (item) => item.category[0] === "Kefir"
+    );
 
-    const image2 = new Image(30, 30);
-    image2.src = "/media/kefir.svg";
-    const images = ["toto-icon", toto];
-    const imagesl = ["popo-icon", image2];
+    const kombuchaLayer = (
+      <Layer
+        type="symbol"
+        id="kombuchas"
+        images={["kombucha-icon", kombuchaImg]}
+        layout={{ "icon-image": "kombucha-icon" }}
+      >
+        {kombuchas.map((item, index) => (
+          <Feature
+            key={index}
+            onClick={(event) => this.handleClick(item)}
+            coordinates={item.location.coordinates}
+          />
+        ))}
+      </Layer>
+    );
 
-    const items1 = this.props.items.slice(0, 3);
-    const items2 = this.props.items.slice(3, 5);
-
-    const features2 = items2.map((item, index) => (
-      <Feature key={index} coordinates={item.location.coordinates} />
-    ));
-
-    const features = items1.map((item, index) => (
-      <Feature key={index} coordinates={item.location.coordinates} />
-    ));
+    const kefirLayer = (
+      <Layer
+        type="symbol"
+        id="kefirs"
+        images={["kefir-icon", kefirImg]}
+        layout={{ "icon-image": "kombucha-icon" }}
+      >
+        {kefirs.map((item, index) => (
+          <Feature
+            key={index}
+            onClick={(event) => this.handleClick(item)}
+            coordinates={item.location.coordinates}
+          />
+        ))}
+      </Layer>
+    );
 
     return (
       <Map
@@ -68,22 +99,8 @@ class AppMap extends React.PureComponent {
         }}
         center={[this.state.lng, this.state.lat]}
       >
-        <Layer
-          type="symbol"
-          id="marker"
-          images={images}
-          layout={{ "icon-image": "toto-icon" }}
-        >
-          {features}
-        </Layer>
-        <Layer
-          type="symbol"
-          id="marker2"
-          images={imagesl}
-          layout={{ "icon-image": "popo-icon" }}
-        >
-          {features2}
-        </Layer>
+        {kombuchaLayer}
+        {kefirLayer}
       </Map>
     );
   }
