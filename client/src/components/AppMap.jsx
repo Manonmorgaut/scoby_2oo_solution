@@ -8,8 +8,14 @@ const Map = ReactMapboxGl({
 const kombuchaImg = new Image(20, 30);
 kombuchaImg.src = "/media/kombucha.svg";
 
-const kefirImg = new Image(30, 30);
+const kefirImg = new Image(20, 30);
 kefirImg.src = "/media/kefir.svg";
+
+const vinegarImg = new Image(20, 30);
+vinegarImg.src = "/media/vinegar.svg";
+
+const plantImg = new Image(20, 30);
+plantImg.src = "/media/plant.svg";
 
 class AppMap extends React.PureComponent {
   state = {
@@ -36,8 +42,8 @@ class AppMap extends React.PureComponent {
     }
   }
 
-  handleClick = (selectedItemIndex) => {
-    this.props.handleSelectItem(selectedItemIndex);
+  handleClick = (selectedItem) => {
+    this.props.handleSelectItem(selectedItem);
   };
 
   render() {
@@ -45,8 +51,49 @@ class AppMap extends React.PureComponent {
       (item) => item.category[0] === "Kombucha"
     );
 
+    const vinegars = this.props.items.filter(
+      (item) => item.category[0] === "Vinegar"
+    );
+
+    const plants = this.props.items.filter(
+      (item) => item.category[0] === "Plant"
+    );
     const kefirs = this.props.items.filter(
       (item) => item.category[0] === "Kefir"
+    );
+
+    const vinegarLayer = (
+      <Layer
+        type="symbol"
+        id="vinegars"
+        images={["vinegar-icon", vinegarImg]}
+        layout={{ "icon-image": "vinegar-icon" }}
+      >
+        {vinegars.map((item, index) => (
+          <Feature
+            key={index}
+            onClick={(event) => this.handleClick(item)}
+            coordinates={item.location.coordinates}
+          />
+        ))}
+      </Layer>
+    );
+
+    const plantLayer = (
+      <Layer
+        type="symbol"
+        id="plants"
+        images={["plant-icon", plantImg]}
+        layout={{ "icon-image": "plant-icon" }}
+      >
+        {plants.map((item, index) => (
+          <Feature
+            key={index}
+            onClick={(event) => this.handleClick(item)}
+            coordinates={item.location.coordinates}
+          />
+        ))}
+      </Layer>
     );
 
     const kombuchaLayer = (
@@ -59,7 +106,7 @@ class AppMap extends React.PureComponent {
         {kombuchas.map((item, index) => (
           <Feature
             key={index}
-            onClick={(event) => this.handleClick(index)}
+            onClick={(event) => this.handleClick(item)}
             coordinates={item.location.coordinates}
           />
         ))}
@@ -71,7 +118,7 @@ class AppMap extends React.PureComponent {
         type="symbol"
         id="kefirs"
         images={["kefir-icon", kefirImg]}
-        layout={{ "icon-image": "kombucha-icon" }}
+        layout={{ "icon-image": "kefir-icon" }}
       >
         {kefirs.map((item, index) => (
           <Feature
@@ -99,6 +146,8 @@ class AppMap extends React.PureComponent {
       >
         {kombuchaLayer}
         {kefirLayer}
+        {vinegarLayer}
+        {plantLayer}
       </Map>
     );
   }

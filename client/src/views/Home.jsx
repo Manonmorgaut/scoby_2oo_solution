@@ -22,8 +22,8 @@ class Home extends React.Component {
     this.setState({ items: [...this.state.items, item] });
   };
 
-  onSelectItem = (index) => {
-    this.setState({ selectedItem: index });
+  onSelectItem = (selectedItem) => {
+    this.setState({ selectedItem: selectedItem });
   };
 
   handleClose = () => {
@@ -42,10 +42,7 @@ class Home extends React.Component {
           />
         )}
         {this.state.selectedItem !== null && (
-          <ItemDisplay
-            item={this.props.items[this.state.selectedItem]}
-            handleClose={this.handleClose}
-          />
+          <ItemDisplay item={this.state.selectedItem} handleClose={this.handleClose} />
         )}
         <AppMap items={this.state.items} handleSelectItem={this.onSelectItem} />
       </React.Fragment>
