@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcrypt");
-const User = require("../models/User");
+const bcrypt = require("bcrypt"); // package that allows us to securely encrypt user password.
+const User = require("../models/User"); 
+const salt = 10; // Salt for bcrypt's hashing algorithm
 
 router.post("/signin", (req, res, next) => {
   const { email, password } = req.body;
@@ -9,7 +10,10 @@ router.post("/signin", (req, res, next) => {
     if (!userDocument) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    const isValidPassword = bcrypt.compareSync(password, userDocument.password);
+    const isValidPassword = bcrypt.compareSync(password, userDocument.password); // Will send back a boolean if password sent in req.body doesnt 
+    //match userDocument's password.
+    // => If it doesnt match (false) send an error message 
+    // => If it matchs, the email & password are valid, set the user in the session.
     if (!isValidPassword) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
@@ -21,7 +25,6 @@ router.post("/signin", (req, res, next) => {
   });
 });
 
-const salt = 10;
 
 router.post("/signup", (req, res, next) => {
   const { email, password, firstName, lastName } = req.body;

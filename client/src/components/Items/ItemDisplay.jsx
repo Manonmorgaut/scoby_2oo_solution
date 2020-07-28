@@ -2,6 +2,7 @@ import React from "react";
 import "../../styles/ItemDisplay.css";
 
 const ItemDisplay = ({ item, handleClose }) => {
+  console.log(item)
   return (
     <div className="Item-container">
       <p onClick={handleClose} className="close-link">

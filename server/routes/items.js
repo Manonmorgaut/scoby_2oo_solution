@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const Item = require("../models/Item");
 const uploader = require("../config/cloudinary");
-const requireAuth = require("../middlewares/requireAuth");
+const requireAuth = require("../middlewares/requireAuth"); // Route protection middleware : )
 
 router.get("/", (req, res, next) => {
   Item.find({})
-    .populate("id_user")
+    .populate("id_user") // Gives us the author's id (id_user) object document instead of just the id : )
     .then((itemDocuments) => {
       res.status(200).json(itemDocuments);
     })
@@ -16,14 +16,22 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", requireAuth, uploader.single("image"), (req, res, next) => {
-  if (req.file) {
-    req.body.image = req.file.secure_url;
-  } else delete req.body.image;
+  const updateValues = { ...req.body };
 
-  req.body.id_user = req.session.currentUser._id;
-  Item.create(req.body)
+  if (req.file) {
+    updateValues.image = req.file.path;
+  }
+
+  updateValues.id_user = req.session.currentUser._id; // Retrieve the authors id from the session.
+
+  Item.create(updateValues)
     .then((itemDocument) => {
-      res.status(201).json(itemDocument);
+      itemDocument
+        .populate("id_user").execPopulate() // Populate on .create() does not work, but we can use populate() on the document once its created !
+        .then((item) => {
+          res.status(201).json(item); // send the populated document.
+        })
+        .catch((error) => res.status(500).json(error));
     })
     .catch((error) => {
       res.status(500).json(error);
@@ -37,7 +45,7 @@ router.patch( "/:id", requireAuth,uploader.single("image"), (req, res, next) => 
       item.image = req.file.secure_url;
     }
 
-    Item.findByIdAndUpdate(req.params.id, item, { new: true })
+    Item.findByIdAndUpdate(req.params.id, item, { new: true }).populate("id_user")
       .then((itemDocument) => {
         res.status(200).json(itemDocument);
       })

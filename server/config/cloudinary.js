@@ -1,5 +1,5 @@
-const cloudinary = require("cloudinary");
-const cloudinaryStorage = require("multer-storage-cloudinary");
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const multer = require("multer");
 
 cloudinary.config({
@@ -8,9 +8,9 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-const storage = cloudinaryStorage({
-  cloudinary: cloudinary,
-  folder: "scoby",
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary, // Cloudinary configuration
+  folder: "scoby", // folder name to upload to on your cloudinary account.
   allowedFormats: ["jpg", "png"],
   filename: function (req, file, cb) {
     cb(null, file.originalname);

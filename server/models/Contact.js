@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+/**
+ *
+ * This is not used.
+ */
+
 const contactSchema = new Schema({
   id_user: {
     type: Schema.Types.ObjectId,

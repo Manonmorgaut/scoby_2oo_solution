@@ -5,6 +5,13 @@ const Map = ReactMapboxGl({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
 });
 
+// Programatically create image objects with js that we'll pass later to the layers.
+// The reason we need this is because the Layer component <images> prop takes as argument
+// an array with as first argument a key, an HTMLImageElement.
+// https://github.com/alex3165/react-mapbox-gl/blob/master/docs/API.md#layer
+// images: [imageKey: string, image: HTMLImageElement, options: object] Also accepts array of the previous image tuple.
+// Add images for use in layout with prop icon-image. The value should be the imageKey string of the tuple.
+// Alternatively, use mapbox studio to upload the image, it will be fetched with the map style object. (see map.addImage options for the tuple options).
 const kombuchaImg = new Image(20, 30);
 kombuchaImg.src = "/media/kombucha.svg";
 
@@ -19,12 +26,13 @@ plantImg.src = "/media/plant.svg";
 
 class AppMap extends React.PureComponent {
   state = {
-    lng: 2.349014,
+    lng: 2.349014, // Default lng and lat set to the center of paris.
     lat: 48.864716,
-    zoom: 12,
+    zoom: 12, // used for map zoom level
   };
 
   componentDidMount() {
+    // Get users geo location and set it as the state so the map centers relative to the users current location. :)
     const success = (position) => {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
@@ -43,6 +51,7 @@ class AppMap extends React.PureComponent {
   }
 
   handleClick = (selectedItem) => {
+    // Pass the selectedItem back to the parent.
     this.props.handleSelectItem(selectedItem);
   };
 

@@ -71,7 +71,7 @@ class AutocompletePlace extends Component {
         <input
           className="input"
           type="text"
-          defaultValue={this.props.defaultValue || ""}
+          value={this.props.defaultValue || this.state.search}
           onChange={this.handleSearchChange}
           placeholder="Type an address"
         />

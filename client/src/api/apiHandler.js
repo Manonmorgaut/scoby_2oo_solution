@@ -46,7 +46,7 @@ export default {
 
   updateUser(data) {
     return service
-      .patch("/api/users", data)
+      .patch("/api/users/me", data)
       .then((res) => res.data)
       .catch(errorHandler);
   },
@@ -67,7 +67,7 @@ export default {
 
   getUserItems() {
     return service
-      .get("/api/users/items")
+      .get("/api/users/me/items")
       .then((res) => res.data)
       .catch(errorHandler);
   },

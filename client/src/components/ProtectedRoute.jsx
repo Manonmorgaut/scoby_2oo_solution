@@ -12,6 +12,7 @@ function ProtectedRoute({ component: Component, render, ...rest }) {
         if (context.isLoggedIn) {
           return (
             <React.Fragment>
+              {/* If render prop is used instead of the component prop when calling ProtectedRoute (emulates <Route/> render method.*/}
               {render && <Route {...rest} render={render} />}
               {!render && (
                 <Route {...rest} render={(props) => <Component {...props} />} />

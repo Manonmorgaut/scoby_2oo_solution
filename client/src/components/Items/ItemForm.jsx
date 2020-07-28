@@ -17,8 +17,8 @@ class ItemForm extends Component {
     quantity: "",
     address: "",
     description: "",
-    image: "",
     httpResponse: null,
+    error: null,
   };
 
   formRef = React.createRef();
@@ -32,6 +32,19 @@ class ItemForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+
+    // Handle some validation here.
+
+    // eg:
+    if (!this.state.category) {
+      this.setState({ error: "No category selected !" }, () => {
+        this.timeoutId = setTimeout(() => {
+          this.setState({ error: null });
+        }, 1000);
+      });
+      return;
+    }
+
     const fd = new FormData();
     const { httpResponse, ...data } = this.state;
     buildFormData(fd, data); // You can find this function in ./src/utils.js
@@ -77,7 +90,7 @@ class ItemForm extends Component {
   };
 
   render() {
-    const { httpResponse } = this.state;
+    const { httpResponse, error } = this.state;
     return (
       <div className="ItemForm-container">
         <form
@@ -181,7 +194,7 @@ class ItemForm extends Component {
             Want to be contacted by phone? Add your phone number in your
             personal page.
           </Message>
-
+          {error && <FeedBack message={error} status="failure" />}
           <Button primary>Add Item</Button>
         </form>
       </div>
